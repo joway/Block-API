@@ -13,6 +13,7 @@ class Article(models.Model):
     content = models.TextField('Markdown 文本')
     created_at = models.DateTimeField('创建时间', auto_now_add=True)
     updated_at = models.DateTimeField('更新时间', auto_now_add=True)
+    is_post = models.BooleanField('是否是博文', default=True)
 
     tags = TaggableManager(blank=True)
 

@@ -58,6 +58,7 @@ INSTALLED_APPS = (
     'article',
     'catalog',
     'comment',
+    'activity',
 
     # third part apps
     'rest_framework',

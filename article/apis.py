@@ -1,5 +1,7 @@
 from rest_framework import viewsets
+from rest_framework.decorators import list_route
 from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 
 from utils.paginations import ArticlePagination
 from .models import Article
@@ -14,3 +16,14 @@ class ArticleViewSet(viewsets.ModelViewSet):
     serializer_class = ArticleSerializer
     permission_classes = [AllowAny, ]
     pagination_class = ArticlePagination
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset().filter(is_post=True)
+        page = self.paginate_queryset(queryset=queryset)
+        serializer = self.get_serializer(page, many=True)
+        return self.get_paginated_response(serializer.data)
+
+    @list_route(methods=['GET'])
+    def about(self, request, *args, **kwargs):
+        queryset = self.get_queryset().filter(is_post=False, title__contains='About').first()
+        return Response(self.get_serializer(queryset).data)
