@@ -21,6 +21,7 @@ ADD ./.deploy/supervisord.conf /etc/supervisor/conf.d/
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+RUN chmod +x ./*.sh
 
 ADD . /code
 
