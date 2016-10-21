@@ -26,6 +26,6 @@ ADD . /code
 
 EXPOSE 80
 EXPOSE 8000
-CMD ["supervisord", "-n"]
+CMD ["./endpoint.sh"]
 
 
