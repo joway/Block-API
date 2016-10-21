@@ -30,7 +30,7 @@ except ImportError:
     pass
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'False')
+DEBUG = os.environ.get('DEBUG', 'True')
 if DEBUG == 'False':
     DEBUG = False
 else:
