@@ -3,7 +3,7 @@ import os
 MAIL_DEBUG = True
 
 ENV = {
-    'DEBUG': 'True',
+    'DEBUG': 'False',
     'MAIL_APP_USER': 'jowaywong',
     'MAIL_APP_KEY': 'fwPcJDvCdgEHsuLt',
     'SOCIAL_AUTH_QQ_KEY': '101330350',
