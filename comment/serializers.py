@@ -16,3 +16,9 @@ class CommentQuerySerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ('comment_to', 'type')
+
+
+class CommentCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('comment_to', 'type', 'content')
