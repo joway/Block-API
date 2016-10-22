@@ -27,6 +27,6 @@ ADD . /code
 
 EXPOSE 80
 EXPOSE 8000
-CMD ["./endpoint.sh"]
+CMD ["sh", "./endpoint.sh"]
 
 
