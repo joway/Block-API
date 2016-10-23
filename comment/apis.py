@@ -19,7 +19,7 @@ class CommentViewSet(viewsets.GenericViewSet):
         serializer = CommentCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(author=request.user)
-        return Response(data={'msg': '创建成功'})
+        return Response(data={'detail': '创建成功'})
 
     def list(self, request, *args, **kwargs):
         serializer = CommentQuerySerializer(data=request.GET)
