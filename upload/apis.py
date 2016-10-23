@@ -47,4 +47,4 @@ class UploadViewSet(viewsets.GenericViewSet):
             'hash': request.POST.get('hash'),
         }
         logger.info(info)
-        return Response({"message": "callback success"})
+        return Response({"detail": "callback success"})

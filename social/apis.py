@@ -37,7 +37,7 @@ class SocialAuthViewSet(viewsets.GenericViewSet):
                                             provider=serializer.data['provider'])
             return Response(data={'token': get_jwt_token(user)}, status=status.HTTP_200_OK)
         except SocialOauthNotExist:
-            return Response(data={'message': '该帐户未绑定'}, status=status.HTTP_404_NOT_FOUND)
+            return Response(data={'detail': '该帐户未绑定'}, status=status.HTTP_404_NOT_FOUND)
 
     @list_route(methods=['get'])
     def redirect(self, request):
@@ -57,9 +57,9 @@ class SocialAuthViewSet(viewsets.GenericViewSet):
         try:
             SocialOauthService.binding(request.user, serializer.data['provider']
                                        , serializer.data['code'])
-            return Response(data={'message': '绑定成功'}, status=status.HTTP_200_OK)
+            return Response(data={'detail': '绑定成功'}, status=status.HTTP_200_OK)
         except SocialOauthHasBound:
-            return Response(data={'message': '社交帐号已被其它帐号绑定'}, status=status.HTTP_403_FORBIDDEN)
+            return Response(data={'detail': '社交帐号已被其它帐号绑定'}, status=status.HTTP_403_FORBIDDEN)
 
     @list_route(methods=['get'])
     def github(self, request):
@@ -70,7 +70,7 @@ class SocialAuthViewSet(viewsets.GenericViewSet):
         if True:
             return Response(data={'access_token': access_token}, status=status.HTTP_200_OK)
         else:
-            return Response(data={'message': '帐号未绑定, 跳转到登陆/注册界面'}, status=status.HTTP_403_FORBIDDEN)
+            return Response(data={'detail': '帐号未绑定, 跳转到登陆/注册界面'}, status=status.HTTP_403_FORBIDDEN)
 
     @list_route(methods=['get'])
     def qq(self, request):
@@ -81,7 +81,7 @@ class SocialAuthViewSet(viewsets.GenericViewSet):
         if True:
             return Response(data={'access_token': access_token}, status=status.HTTP_200_OK)
         else:
-            return Response(data={'message': '帐号未绑定, 跳转到登陆/注册界面'}, status=status.HTTP_403_FORBIDDEN)
+            return Response(data={'detail': '帐号未绑定, 跳转到登陆/注册界面'}, status=status.HTTP_403_FORBIDDEN)
 
     @list_route(methods=['get'])
     def coding(self, request):
@@ -92,4 +92,4 @@ class SocialAuthViewSet(viewsets.GenericViewSet):
         if True:
             return Response(data={'access_token': user_info}, status=status.HTTP_200_OK)
         else:
-            return Response(data={'message': '帐号未绑定, 跳转到登陆/注册界面'}, status=status.HTTP_403_FORBIDDEN)
+            return Response(data={'detail': '帐号未绑定, 跳转到登陆/注册界面'}, status=status.HTTP_403_FORBIDDEN)

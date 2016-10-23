@@ -56,7 +56,7 @@ class OauthViewSet(viewsets.GenericViewSet):
         try:
             grant = OauthService.grant(serializer.data['client_id'], request.user)
         except ApplicationNotExist:
-            return Response(data={'message': '应用不存在'}, status=status.HTTP_403_FORBIDDEN)
+            return Response(data={'detail': '应用不存在'}, status=status.HTTP_403_FORBIDDEN)
         return HttpResponseRedirect(grant.application.redirect_uri + '?code=' + grant.code)
 
     @list_route(methods=['post'])
@@ -115,7 +115,7 @@ class OauthViewSet(viewsets.GenericViewSet):
         try:
             token = OauthService.verify_access_token(serializer.data['access_token'])
         except TokenNotExist:
-            return Response(data={'message': 'Token 无效'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(data={'detail': 'Token 无效'}, status=status.HTTP_401_UNAUTHORIZED)
         except TokenExpired:
-            return Response(data={'message': 'Token 过期'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(data={'detail': 'Token 过期'}, status=status.HTTP_401_UNAUTHORIZED)
         return Response(UserSerializer(token.user).data)
