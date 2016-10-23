@@ -90,7 +90,7 @@ class AuthViewSet(viewsets.GenericViewSet):
         serializer.is_valid(raise_exception=True)
         try:
             UserService.activate(alink_verify_code=serializer.data['captcha'])
-            return Response(data={'激活成功'}, status=status.HTTP_200_OK)
+            return Response(data={'message': '激活成功'}, status=status.HTTP_200_OK)
         except LinkCaptchaError:
             return Response(data={'message': '验证码错误'}, status=status.HTTP_403_FORBIDDEN)
         except UserHasActivated:
