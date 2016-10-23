@@ -6,7 +6,8 @@ from rest_framework.response import Response
 
 from captcha.exceptions import LinkCaptchaError, LinkCaptchaExpired, VerifyTimeFrequently
 from sendcloud.exceptions import SendcloudError
-from utils.permissions import IsAdminOrSelf
+from user.constants import ANONYMOUS_USER
+from utils.permissions import IsAdminOrSelf, check_permission
 from .exceptions import EmailExist, UserNotExist, PasswordError, UserHasActivated
 from .models import User
 from .serializers import UserSerializer, ProfileChangeSerializer, UserAuthSerializer, \
@@ -21,19 +22,24 @@ class ProfileViewSet(viewsets.GenericViewSet,
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated, IsAdminOrSelf]
+    permission_classes = [AllowAny, ]
 
     def list(self, request, *args, **kwargs):
         """
         获取用户自己的信息
         """
-        serializer = self.get_serializer(request.user)
+        if not request.user.is_authenticated():
+            serializer = self.get_serializer(data=ANONYMOUS_USER)
+            serializer.is_valid(raise_exception=True)
+        else:
+            serializer = self.get_serializer(request.user)
         return Response(data=serializer.data)
 
     def update(self, request, *args, **kwargs):
         """
         修改用户信息
         """
+        check_permission((IsAuthenticated, IsAdminOrSelf), self, request)
         instance = request.user
         serializer = ProfileChangeSerializer(instance, data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -77,10 +83,10 @@ class AuthViewSet(viewsets.GenericViewSet):
         except PasswordError:
             return Response(data={'message': '用户密码错误'}, status=status.HTTP_403_FORBIDDEN)
 
-    @list_route(methods=['get'])
+    @list_route(methods=['post'])
     @non_atomic_requests
     def activate(self, request):
-        serializer = UserLinkActivateSerializer(data=request.GET)
+        serializer = UserLinkActivateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         try:
             UserService.activate(alink_verify_code=serializer.data['captcha'])

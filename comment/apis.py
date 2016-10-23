@@ -18,7 +18,7 @@ class CommentViewSet(viewsets.GenericViewSet):
     def create(self, request, *args, **kwargs):
         serializer = CommentCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(user=request.user)
+        serializer.save(author=request.user)
         return Response(data={'msg': '创建成功'})
 
     def list(self, request, *args, **kwargs):
