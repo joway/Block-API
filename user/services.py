@@ -32,7 +32,7 @@ class UserService(object):
         if sendcloud_template(to=[email],
                               tpt_ivk_name=SendCloudTemplates.REGISTER,
                               sub_vars={'%username%': [email],
-                                        '%url%': [DOMAIN_URL + '/user/activate?confirm=%s&&email=%s' % (
+                                        '%url%': [DOMAIN_URL + '/auth/activate?confirm=%s&&email=%s' % (
                                                 link_captcha.captcha, email)]}):
             user.save()
             return user

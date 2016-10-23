@@ -189,7 +189,7 @@ MAIL_APP_KEY = os.environ.get('MAIL_APP_KEY')
 
 # re url
 LOGIN_URL = '/auth/login/'
-DOMAIN_URL = 'http://api.i2p.pub:8000'
+DOMAIN_URL = 'http://blog.joway.wang'
 
 QINIU_CALLBACK_URL = DOMAIN_URL + '/upload/callback/'
 
