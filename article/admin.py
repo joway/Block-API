@@ -1,10 +1,12 @@
 from django.contrib import admin
 
+from article.forms import ArticleModelForm
 from article.models import Article
 
 
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', 'tag_list', 'author']
+    form = ArticleModelForm
 
     class Meta:
         model = Article

@@ -1,12 +1,11 @@
 from django.db import models
 
-# Create your models here.
-from activity.constants import ACTIVITY_TYPE_CHOICES
 from user.models import User
+from utils.constants import CONTENT_TYPE_CHOICES
 
 
 class Activity(models.Model):
-    target = models.CharField('活动对象', max_length=1024)
     owner = models.ForeignKey(User)
-    created_at = models.DateTimeField('创建时间')
-    type = models.IntegerField('活动种类', choices=ACTIVITY_TYPE_CHOICES)
+    created_at = models.DateTimeField('创建时间', auto_now_add=True)
+    type = models.IntegerField('活动种类', choices=CONTENT_TYPE_CHOICES)
+    description = models.CharField('活动内容', max_length=1024)

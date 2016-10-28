@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -21,8 +20,11 @@ class Migration(migrations.Migration):
                 ('username', models.CharField(blank=True, max_length=32, verbose_name='用户名')),
                 ('expire_at', models.DateTimeField(blank=True, null=True, verbose_name='token失效时间')),
                 ('access_token', models.CharField(blank=True, max_length=255, null=True, verbose_name='access_token')),
-                ('refresh_token', models.CharField(blank=True, max_length=255, null=True, verbose_name='refresh_token')),
-                ('provider', models.CharField(choices=[('github', 'Github'), ('qq', 'QQ'), ('coding', 'Coding')], max_length=10, verbose_name='类别')),
+                (
+                'refresh_token', models.CharField(blank=True, max_length=255, null=True, verbose_name='refresh_token')),
+                ('provider',
+                 models.CharField(choices=[('github', 'Github'), ('qq', 'QQ'), ('coding', 'Coding')], max_length=10,
+                                  verbose_name='类别')),
             ],
         ),
     ]

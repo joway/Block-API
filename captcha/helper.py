@@ -6,7 +6,7 @@ from utils.utils import get_random_string
 
 
 def link_captcha_expire_at():
-    return (timezone.now() + timezone.timedelta(hours=24))
+    return timezone.now() + timezone.timedelta(hours=24)
 
 
 def gen_link_captcha():

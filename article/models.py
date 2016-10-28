@@ -1,10 +1,11 @@
 from django.db import models
 from taggit.managers import TaggableManager
 
+import comment.services
+from activity.services import ActivityService
 from catalog.models import Catalog
-from comment.constants import CommentTypes
-from comment.models import Comment
 from user.models import User
+from utils.constants import ContentTypes
 
 
 class Article(models.Model):
@@ -23,4 +24,8 @@ class Article(models.Model):
         return [o.name for o in self.tags.all()]
 
     def comment_list(self):
-        return Comment.objects.filter(comment_to=self.id, type=CommentTypes.ARTICLE)
+        return comment.services.CommentService.get_comments(comment_to=self.id, type=ContentTypes.ARTICLE)
+
+    def save(self, *args, **kwargs):
+        super(...).save(*args, **kwargs)
+        ActivityService.create_activity(user=self.author, obj=self, type=ContentTypes.ARTICLE)
